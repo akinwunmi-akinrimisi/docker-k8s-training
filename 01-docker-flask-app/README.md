@@ -1,4 +1,4 @@
-# Docker Exercise: Simple Flask App
+# Docker: Containerizing a Simple Flask App
 
 This exercise has the following objectives:
 - Understanding a simple python flask app
@@ -6,6 +6,9 @@ This exercise has the following objectives:
 - Building docker images
 - Running docker containers with built image
 - Pushing docker images to a container registry
+
+## Pre-requisites
+- Docker should be installed. Details on installing can be found [here](https://docs.docker.com/get-docker/)
 
 ## Understanding a simple python flask app
 [Flask](https://flask.palletsprojects.com/en/2.2.x/) is a Python framework used in developing web apps.
