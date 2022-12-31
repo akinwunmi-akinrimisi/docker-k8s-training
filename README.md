@@ -3,8 +3,8 @@ This contains a list of exercises that takes you from containerizing a simple ap
 It aims to teach and demonstrate key concepts with Docker and Kubernetes and is suitable for beginners
 
 ## Content
-[Docker: Containerizing a Simple Flask App](01-docker-flask-app/README.md)
-[Kubernetes: Deploying and Configuring Pods](02-kubernetes-pod/README.md)
-[Kubernetes: Working with ConfigMaps and Secrets](03-kubernetes-config/README.md)
-[Kubernetes: Working with Deployments and Services](04-kubernetes-deployment-and-services/README.md)
-[Further Reading](05-further-reading/README.md)
+- [Docker: Containerizing a Simple Flask App](01-docker-flask-app/README.md)
+- [Kubernetes: Deploying and Configuring Pods](02-kubernetes-pod/README.md)
+- [Kubernetes: Working with ConfigMaps and Secrets](03-kubernetes-config/README.md)
+- [Kubernetes: Working with Deployments and Services](04-kubernetes-deployment-and-services/README.md)
+- [Further Reading](05-further-reading/README.md)
