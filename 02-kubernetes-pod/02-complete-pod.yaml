@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-flask-app
+spec:
+  containers:
+  - name: my-flask-app
+    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
+    ports:
+    - containerPort: 9900
+    env:
+    - name: LOG_LEVEL
+      value: "DEBUG"
+    - name: AUTHOR
+      value: "Pod"
+    startupProbe:
+      httpGet:
+        path: /author
+        port: 9900
+      failureThreshold: 30
+      periodSeconds: 10
+    readinessProbe:
+      tcpSocket:
+        port: 9900
+      initialDelaySeconds: 5
+      periodSeconds: 10
+    livenessProbe:
+      tcpSocket:
+        port: 9900
+      initialDelaySeconds: 5
+      periodSeconds: 10
