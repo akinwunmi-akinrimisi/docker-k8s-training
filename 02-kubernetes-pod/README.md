@@ -53,7 +53,7 @@ We are going to set two environment variables here:
 To do this:
 - Delete the current running pod: `kubectl delete pod my-flask-app`
 - Edit your pod.yaml file to be similar to the below (i.e. add the env portion)
-```
+```diff
 # pod.yaml
 apiVersion: v1
 kind: Pod
@@ -65,11 +65,11 @@ spec:
     image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
     ports:
     - containerPort: 9900
-    env:
-    - name: LOG_LEVEL
-      value: "DEBUG"
-    - name: AUTHOR
-      value: "Pod"
++   env:
++   - name: LOG_LEVEL
++     value: "DEBUG"
++   - name: AUTHOR
++     value: "Pod"
 ```
 - Recreate the pod `kubectl create -f <path to pod.yaml>`
 - (Optional) Repeat the port forward and log inspection steps to see differences
@@ -105,27 +105,27 @@ spec:
     image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
     ports:
     - containerPort: 9900
-+    env:
-+    - name: LOG_LEVEL
-+      value: "DEBUG"
-+    - name: AUTHOR
-+      value: "Pod"
-    startupProbe:
-      httpGet:
-        path: /author
-        port: 9900
-      failureThreshold: 30
-      periodSeconds: 10
-    readinessProbe:
-      tcpSocket:
-        port: 9900
-      initialDelaySeconds: 5
-      periodSeconds: 10
-    livenessProbe:
-      tcpSocket:
-        port: 9900
-      initialDelaySeconds: 15
-      periodSeconds: 20
+    env:
+    - name: LOG_LEVEL
+      value: "DEBUG"
+    - name: AUTHOR
+      value: "Pod"
++   startupProbe:
++     httpGet:
++       path: /author
++       port: 9900
++     failureThreshold: 30
++     periodSeconds: 10
++   readinessProbe:
++     tcpSocket:
++       port: 9900
++     initialDelaySeconds: 5
++     periodSeconds: 10
++   livenessProbe:
++     tcpSocket:
++       port: 9900
++     initialDelaySeconds: 15
++     periodSeconds: 20
 ```
 - Recreate the pod `kubectl create -f <path to pod.yaml>`
 - Run `kubectl get pods -o wide` and pay attention to the `READINESS GATES` column especially
