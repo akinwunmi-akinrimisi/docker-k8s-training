@@ -73,6 +73,13 @@ spec:
     image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
     ports:
     - containerPort: 9900
+    resources:
+      requests:
+        memory: "25Mi"
+        cpu: "250m"
+      limits:
+        memory: "50Mi"
+        cpu: "500m"
 +   envFrom:
 +   - configMapRef:
 +       name: flask-config
@@ -122,6 +129,13 @@ spec:
     image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
     ports:
     - containerPort: 9900
+    resources:
+      requests:
+        memory: "25Mi"
+        cpu: "250m"
+      limits:
+        memory: "50Mi"
+        cpu: "500m"
     envFrom:
     - configMapRef:
         name: flask-config
@@ -190,6 +204,13 @@ spec:
     image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
     ports:
     - containerPort: 9900
+    resources:
+      requests:
+        memory: "25Mi"
+        cpu: "250m"
+      limits:
+        memory: "50Mi"
+        cpu: "500m"
 +   volumeMounts:
 +     - name: config-volume
 +       mountPath: /app/templates/

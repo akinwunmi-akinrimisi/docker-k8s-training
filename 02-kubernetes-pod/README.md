@@ -129,3 +129,60 @@ spec:
 ```
 - Recreate the pod `kubectl create -f <path to pod.yaml>`
 - Run `kubectl get pods -o wide` and pay attention to the `READINESS GATES` column especially
+
+## Configure Resources for the Pod Container
+Kubernetes Pod containers resource configuration usually has to do with allocating memory (RAM) and CPU to a container.
+This is important because if the application/container has an issue like an out of memory error, your compute costs are capped i.e. the cluster won't keep scaling to meet the unwieldy demand.
+Resources are usually configured under two components:
+- Request: The amount of resource (memory or CPU) allocated to a container at start time. It should be noted that the container may be given more resource if it requires it
+- Limit: This is the maximum amount of resource the container can have allocated to it. If the container in fact requires more, it is restarted.
+In summary, when resources are configured, the container has the "request" amount of resource allocated, it can then consume more if needed until it reaches the "limit" amount
+
+To configure resources for our Pod
+- Run our application: `python3 ${PATH_TO_REPO}/01-docker-flask-app/src/app.py`
+- Use our System Monitor/Activity Monitor/Task manager to see what usage looks like. Based on that, you can determine your values for requests and limits for CPU and Memory.
+- Let's use the following values: memory requests: 25Mi, memory limits: 50Mi, cpu requests: 250m, cpu limits: 500m
+  - To do this,
+    - Delete the current running pod: `kubectl delete pod my-flask-app`
+    - Edit your pod.yaml file to be similar to the below (i.e. add the resources portion)
+```diff
+# pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-flask-app
+spec:
+  containers:
+  - name: my-flask-app
+    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
+    ports:
+    - containerPort: 9900
++   resources:
++     requests:
++       memory: "25Mi"
++       cpu: "250m"
++     limits:
++       memory: "50Mi"
++       cpu: "500m"
+    env:
+    - name: LOG_LEVEL
+      value: "DEBUG"
+    - name: AUTHOR
+      value: "Pod"
+    startupProbe:
+      httpGet:
+        path: /author
+        port: 9900
+      failureThreshold: 30
+      periodSeconds: 10
+    readinessProbe:
+      tcpSocket:
+        port: 9900
+      initialDelaySeconds: 5
+      periodSeconds: 10
+    livenessProbe:
+      tcpSocket:
+        port: 9900
+      initialDelaySeconds: 5
+      periodSeconds: 10
+```
