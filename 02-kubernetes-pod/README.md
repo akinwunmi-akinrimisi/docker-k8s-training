@@ -186,3 +186,5 @@ spec:
       initialDelaySeconds: 5
       periodSeconds: 10
 ```
+- Recreate the pod `kubectl create -f <path to pod.yaml>`
+- Run `kubectl top pod my-flask-app` to see resource allocation of the pod
