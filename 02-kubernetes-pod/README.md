@@ -188,3 +188,59 @@ spec:
 ```
 - Recreate the pod `kubectl create -f <path to pod.yaml>`
 - Run `kubectl top pod my-flask-app` to see resource allocation of the pod
+
+
+## Add an initContainer to your Pod
+Using init containers is one of the multi-container Pod design patterns. As the name implies, initContainers give you the ability to run a container (or a number of containers) to carry out certain tasks before the main container(s) in a Pod.
+These init containers are so called as they are often used to carry out "initialization" related actions.
+We are going to add a simple initContainer to our pod that just echoes a message then sleeps for 1 minute using an alpine image. To do this,
+- Delete the current running pod: `kubectl delete pod my-flask-app`
+- Edit your pod.yaml as follows (add the initContainers portion):
+```diff
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-flask-app
+spec:
++ initContainers:
++ - name: sleepy
++   image: alpine
++   command: ['sleep', '60']
+  containers:
+  - name: my-flask-app
+    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
+    ports:
+    - containerPort: 9900
+    resources:
+      requests:
+        memory: "25Mi"
+        cpu: "250m"
+      limits:
+        memory: "50Mi"
+        cpu: "500m"
+    env:
+    - name: LOG_LEVEL
+      value: "DEBUG"
+    - name: AUTHOR
+      value: "Pod"
+    startupProbe:
+      httpGet:
+        path: /author
+        port: 9900
+      failureThreshold: 30
+      periodSeconds: 10
+    readinessProbe:
+      tcpSocket:
+        port: 9900
+      initialDelaySeconds: 5
+      periodSeconds: 10
+    livenessProbe:
+      tcpSocket:
+        port: 9900
+      initialDelaySeconds: 5
+      periodSeconds: 10
+```
+- Recreate the pod `kubectl create -f <path to pod.yaml>`
+- Run `kubectl get pods` and observe the status
+
+As mentioned, there are other multi container patterns for pods. [This article](https://medium.com/bb-tutorials-and-thoughts/kubernetes-learn-sidecar-container-pattern-6d8c21f873d) talks about the other most popular one which is the sidecar pattern. It also has links to blogs about the others as well
