@@ -149,3 +149,32 @@ There are three main Kubernetes service types:
 - ClusterIP: Exposes the Service on a cluster-internal IP. Choosing this value makes the Service only reachable from within the cluster. This is the default that is used if you don't explicitly specify a type for a Service.
 - NodePort: Exposes the Service on each Node's IP at a static port (the NodePort). This can be used to make a service reachable outside the cluster.
 - LoadBalancer: Exposes the Service externally using a cloud provider's (e.g. AWS, Azure, GCP) load balancer. This can be used to make a service reachable outside the cluster
+
+
+## Expose Deployments via Services
+For this we are going to cover the following exercises
+- Create a ClusterIP service for our flask app deployment
+- Create a new pod in our cluster and access our flask app via the created Service
+- Create a LoadBalancer service for our application and access it externally
+
+### Create a ClusterIP service for our flask app deployment
+We will expose the deployment with a Cluster IP service that points the service port 80 (default http port) to port 9900 which our deployment/pods expose
+- Run `kubectl expose deployment flask-app-deploy --type=ClusterIP --port=80 --target-port=9900`
+- Inspect the created service:
+  - Run `kubectl get svc flask-app-deploy -o wide`. Note down the CLUSTER-IP value
+  - Run `kubectl get svc flask-app-deploy -o yaml` to see what the yaml for a service looks like
+  - Run `kubectl describe svc flask-app-deploy`
+
+### Create a new pod in our cluster and access our flask app via the created Service
+- We will use a nginx pod for this. To create that: Run `kubectl run nginx --image=nginx`
+- We need to exec into the nginx pod, this will allow us run commands: Run `kubectl exec -it nginx -- sh`
+- Use curl to access the service via the Cluster IP: Run `curl <CLUSTER-IP>:80`
+- You should get the html for the homepage of our application
+- **Optional** You can delete the pods from the deployment, allow them get recreated and repeat the above steps. It should still work exactly the same as even though Pod IPs have changed, the Service IP has not.
+
+
+### Create a LoadBalancer service for our application and access it externally
+- In a separate terminal, Run `minikube tunnel`
+- On your regular terminal, Run `kubectl expose deployment flask-app-deploy --name=flask-app-lb --type=LoadBalancer --port=80 --target-port=9900`
+- Run `kubectl get svc`. Notice that only the Load balancer service has an external IP
+- On your browser, Go to `http://<EXTERNAL IP>:80`. We should get our application
