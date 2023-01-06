@@ -70,7 +70,7 @@ metadata:
 spec:
   containers:
   - name: my-flask-app
-    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
+    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
     ports:
     - containerPort: 9900
     resources:
@@ -126,7 +126,7 @@ metadata:
 spec:
   containers:
   - name: my-flask-app
-    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
+    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
     ports:
     - containerPort: 9900
     resources:
@@ -201,7 +201,7 @@ metadata:
 spec:
   containers:
   - name: my-flask-app
-    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
+    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
     ports:
     - containerPort: 9900
     resources:

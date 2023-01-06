@@ -34,10 +34,10 @@ The Dockerfile in 01-docker-flask-app/Dockerfile builds a simple container image
 The following explains what each line in the Dockerfile achieves
 
 #### Line 1: 
-`FROM python:3.9-slim-buster`
+`FROM python:3.10-slim-bullseye`
 
 Container images are built in layers so the first line of a Dockerfile is normally to invoke an appropriate base image. These can be found on public Docker registries like [Dockerhub](https://hub.docker.com/).
-Given that this is a python3 application. We will use a python3 image. The [3.9-slim-buster image](https://hub.docker.com/layers/library/python/3.9-slim-buster/images/sha256-027813131fa3e8625620e561a865659a7fc251ed47da4de1696def371199f80a?context=explore) to be specific.
+Given that this is a python3 application. We will use a python3 image. The [python:3.10-slim-bullseye](https://hub.docker.com/layers/library/python/3.10-slim-bullseye/images/sha256-6862d8ed663a47f649ba5aababed01e44741a032e80d5800db619f5113f65434?context=explore) to be specific.
 Note that ideally you want the smallest base image you can use thus why we opted for the slim-buster version here.
 
 #### Lines 2-3: 

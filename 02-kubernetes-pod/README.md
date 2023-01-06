@@ -31,7 +31,7 @@ metadata:
 spec:
   containers:
   - name: my-flask-app
-    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
+    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
     ports:
     - containerPort: 9900
 ```
@@ -62,7 +62,7 @@ metadata:
 spec:
   containers:
   - name: my-flask-app
-    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
+    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
     ports:
     - containerPort: 9900
 +   env:
@@ -102,7 +102,7 @@ metadata:
 spec:
   containers:
   - name: my-flask-app
-    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
+    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
     ports:
     - containerPort: 9900
     env:
@@ -154,7 +154,7 @@ metadata:
 spec:
   containers:
   - name: my-flask-app
-    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
+    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
     ports:
     - containerPort: 9900
 +   resources:
@@ -193,7 +193,7 @@ spec:
 ## Add an initContainer to your Pod
 Using init containers is one of the multi-container Pod design patterns. As the name implies, initContainers give you the ability to run a container (or a number of containers) to carry out certain tasks before the main container(s) in a Pod.
 These init containers are so called as they are often used to carry out "initialization" related actions. These could be things like installing packages, creating files that the main container needs and so on.
-We are going to add a simple initContainer to our pod that just echoes a message then sleeps for 1 minute using a busybox image. To do this,
+We are going to add a simple initContainer to our pod that just echoes a message then sleeps for 30 seconds using a busybox image. To do this,
 - Delete the current running pod: `kubectl delete pod my-flask-app`
 - Edit your pod.yaml as follows (add the initContainers portion):
 ```diff
@@ -205,10 +205,10 @@ spec:
 + initContainers:
 + - name: init-sleepy
 +   image: busybox:1.28
-+   command: ['sh', '-c', 'echo "Initializing...waiting for a minute." && sleep 1m;']
++   command: ['sh', '-c', 'echo "Initializing...waiting for a minute." && sleep 30s;']
   containers:
   - name: my-flask-app
-    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
+    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
     ports:
     - containerPort: 9900
     resources:

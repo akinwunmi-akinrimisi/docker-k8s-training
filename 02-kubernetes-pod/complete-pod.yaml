@@ -6,10 +6,10 @@ spec:
   initContainers:
   - image: busybox:1.28
     name: init-sleep
-    command: ['sh', '-c', 'echo "Initializing...waiting for a minute." && sleep 1m;']
+    command: ['sh', '-c', 'echo "Initializing...waiting for a minute." && sleep 30s;']
   containers:
   - name: my-flask-app
-    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.1.0
+    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
     ports:
     - containerPort: 9900
     resources:
