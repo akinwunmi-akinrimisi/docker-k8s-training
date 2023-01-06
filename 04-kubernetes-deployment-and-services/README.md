@@ -176,5 +176,5 @@ We will expose the deployment with a Cluster IP service that points the service 
 ### Create a LoadBalancer service for our application and access it externally
 - In a separate terminal, Run `minikube tunnel`
 - On your regular terminal, Run `kubectl expose deployment flask-app-deploy --name=flask-app-lb --type=LoadBalancer --port=80 --target-port=9900`
-- Run `kubectl get svc`. Notice that only the Load balancer service has an external IP
+- Run `kubectl get svc`. Notice that only the Load balancer service has an EXTERNAL-IP value. Note this down
 - On your browser, Go to `http://<EXTERNAL IP>:80`. We should get our application
