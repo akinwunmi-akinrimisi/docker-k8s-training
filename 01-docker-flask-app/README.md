@@ -8,6 +8,7 @@ This exercise has the following objectives:
 - Pushing docker images to a container registry
 
 ## Pre-requisites
+
 - Docker should be installed. Details on installing can be found [here](https://docs.docker.com/get-docker/)
 
 ## Understanding a simple python flask app
