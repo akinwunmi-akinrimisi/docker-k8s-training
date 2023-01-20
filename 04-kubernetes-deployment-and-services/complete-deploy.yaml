@@ -18,47 +18,47 @@ spec:
         app: flask-app-deploy
     spec:
       containers:
-      - image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
-        name: cloudboosta-flask-app
-        ports:
-        - containerPort: 9900
-        resources:
-          requests:
-            memory: "25Mi"
-            cpu: "250m"
-          limits:
-            memory: "50Mi"
-            cpu: "500m"
-        volumeMounts:
-          - name: config-volume
-            mountPath: /app/templates/
-        envFrom:
-        - configMapRef:
-            name: flask-config
-        env:
-        - name: AUTHOR
-          valueFrom:
-            secretKeyRef:
-              name: flask-secret
-              key: AUTHOR_NAME
-        startupProbe:
-          httpGet:
-            path: /author
-            port: 9900
-          failureThreshold: 30
-          periodSeconds: 10
-        readinessProbe:
-          tcpSocket:
-            port: 9900
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        livenessProbe:
-          tcpSocket:
-            port: 9900
-          initialDelaySeconds: 15
-          periodSeconds: 20
+        - image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
+          name: cloudboosta-flask-app
+          ports:
+            - containerPort: 9900
+          resources:
+            requests:
+              memory: "25Mi"
+              cpu: "250m"
+            limits:
+              memory: "50Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/templates/
+          envFrom:
+            - configMapRef:
+                name: flask-config
+          env:
+            - name: AUTHOR
+              valueFrom:
+                secretKeyRef:
+                  name: flask-secret
+                  key: AUTHOR_NAME
+          startupProbe:
+            httpGet:
+              path: /author
+              port: 9900
+            failureThreshold: 30
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 9900
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 9900
+            initialDelaySeconds: 15
+            periodSeconds: 20
       volumes:
         - name: config-volume
           configMap:
             name: mount-config
-status: {}
+status: { }

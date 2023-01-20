@@ -4,39 +4,39 @@ metadata:
   name: my-flask-app
 spec:
   initContainers:
-  - image: busybox:1.28
-    name: init-sleep
-    command: ['sh', '-c', 'echo "Initializing...waiting for a minute." && sleep 30s;']
+    - image: busybox:1.28
+      name: init-sleep
+      command: [ 'sh', '-c', 'echo "Initializing...waiting for a minute." && sleep 30s;' ]
   containers:
-  - name: my-flask-app
-    image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
-    ports:
-    - containerPort: 9900
-    resources:
-      requests:
-        memory: "25Mi"
-        cpu: "250m"
-      limits:
-        memory: "50Mi"
-        cpu: "500m"
-    env:
-    - name: LOG_LEVEL
-      value: "DEBUG"
-    - name: AUTHOR
-      value: "Pod"
-    startupProbe:
-      httpGet:
-        path: /author
-        port: 9900
-      failureThreshold: 30
-      periodSeconds: 10
-    readinessProbe:
-      tcpSocket:
-        port: 9900
-      initialDelaySeconds: 5
-      periodSeconds: 10
-    livenessProbe:
-      tcpSocket:
-        port: 9900
-      initialDelaySeconds: 5
-      periodSeconds: 10
+    - name: my-flask-app
+      image: ghcr.io/emmanuelogiji/cloudboosta-flask-app:0.2.0
+      ports:
+        - containerPort: 9900
+      resources:
+        requests:
+          memory: "25Mi"
+          cpu: "250m"
+        limits:
+          memory: "50Mi"
+          cpu: "500m"
+      env:
+        - name: LOG_LEVEL
+          value: "DEBUG"
+        - name: AUTHOR
+          value: "Pod"
+      startupProbe:
+        httpGet:
+          path: /author
+          port: 9900
+        failureThreshold: 30
+        periodSeconds: 10
+      readinessProbe:
+        tcpSocket:
+          port: 9900
+        initialDelaySeconds: 5
+        periodSeconds: 10
+      livenessProbe:
+        tcpSocket:
+          port: 9900
+        initialDelaySeconds: 5
+        periodSeconds: 10

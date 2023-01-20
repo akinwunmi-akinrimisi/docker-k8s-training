@@ -193,6 +193,7 @@ spec:
 Kubernetes Pod containers resource configuration usually has to do with allocating memory (RAM) and CPU to a container.
 This is important because if the application/container has an issue like an out of memory error, your compute costs are
 capped i.e. the cluster won't keep scaling to meet the unwieldy demand.
+
 Resources are usually configured under two components:
 
 - Request: The amount of resource (memory or CPU) allocated to a container at start time. It should be noted that the
@@ -265,15 +266,21 @@ spec:
 ```
 
 - Recreate the pod `kubectl create -f <path to pod.yaml>`
-- Run `kubectl top pod my-flask-app` to see resource allocation of the pod
+- Run `kubectl top pod my-flask-app` to see resource allocation of the pod. Note this will give the
+  error `Metrics API unavailable` in our case.
+  This is due to us using just a `demo cluster`
+  . [This link](https://signoz.io/blog/kubectl-top/#using-kubectl-top-pod-command) shows an example of what to expect
+  when using that command
 
 ## Add an initContainer to your Pod
 
 Using init containers is one of the multi-container Pod design patterns. As the name implies, initContainers give you
 the ability to run a container (or a number of containers) to carry out certain tasks before the main container(s) in a
 Pod.
+
 These init containers are so called as they are often used to carry out "initialization" related actions. These could be
 things like installing packages, creating files that the main container needs and so on.
+
 We are going to add a simple initContainer to our pod that just echoes a message then sleeps for 30 seconds using a
 busybox image. To do this,
 
@@ -334,7 +341,8 @@ spec:
 
 - Recreate the pod `kubectl create -f <path to pod.yaml>`
 - Run `kubectl get pods` and observe the status
-- Check the logs of the init container: `kubectl logs my-flask-app -c init-sleepy`
+- Check the logs of the init container: `kubectl logs my-flask-app -c init-sleepy`. You should
+  see `Initializing...waiting for a minute.` as expected
 
 As mentioned, there are other multi container patterns for
 pods. [This blog post](https://medium.com/bb-tutorials-and-thoughts/kubernetes-learn-sidecar-container-pattern-6d8c21f873d)
